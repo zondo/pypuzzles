@@ -26,12 +26,17 @@ def solve(string, lang="en_GB"):
     """Print trackword solution.
     """
 
-    d = enchant.Dict(lang)
+    if enchant.dict_exists(lang):
+        d = enchant.Dict(lang)
+    else:
+        raise ValueError(f"lang must be one of {enchant.list_languages()}")
 
     def isword(w):
         return d.check(w)
 
     words = set(trackword(string, wordfunc=isword))
+    print(len(words))
+
     for word in sorted(words, key=lambda w: (len(w), w)):
         print(word.upper())
 

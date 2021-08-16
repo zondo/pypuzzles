@@ -4,6 +4,7 @@ Solve the Radio Times trackword puzzle.
 
 import enchant
 import networkx as nx
+import itertools as it
 
 
 # Trackword adjacency graph.
@@ -26,6 +27,7 @@ def solve(string, lang="en_GB"):
     """Print trackword solution.
     """
 
+    # Set up dictionary.
     if enchant.dict_exists(lang):
         d = enchant.Dict(lang)
     else:
@@ -34,11 +36,27 @@ def solve(string, lang="en_GB"):
     def isword(w):
         return d.check(w)
 
+    # Get the words.
     words = set(trackword(string, wordfunc=isword))
-    print(len(words))
+    total = len(words)
 
-    for word in sorted(words, key=lambda w: (len(w), w)):
-        print(word.upper())
+    # Create list for each word length, and format to print them.
+    lists = {}
+    fmts = []
+    for wlen in range(3, len(GRAPH) + 1):
+        lists[wlen] = []
+        fmts.append("%%%ds" % wlen)
+
+    fmt = " ".join(fmts)
+
+    for word in sorted(words):
+        lists[len(word)].append(word)
+
+    # Print the words.
+    print(f"{total} words found")
+    print()
+    for words in it.zip_longest(*lists.values(), fillvalue=""):
+        print(fmt % words)
 
 
 def trackword(string, minlen=3, wordfunc=None):
@@ -50,13 +68,13 @@ def trackword(string, minlen=3, wordfunc=None):
 
     # Create letter mapping.
     string = string.lower()
-    lmap = {i: string[i] for i in range(len(string))}
+    lettermap = {i: string[i] for i in range(len(string))}
 
     # Traverse all paths and check for words.
     for path in all_paths(g, minlen):
-        word = "".join(lmap[n] for n in path)
+        word = "".join(lettermap[n] for n in path)
         if not wordfunc or wordfunc(word):
-            yield word
+            yield word.upper()
 
 
 def all_paths(graph, minlen=0):

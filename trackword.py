@@ -6,6 +6,8 @@ import enchant
 import networkx as nx
 import itertools as it
 
+from collections import defaultdict
+
 
 # Trackword adjacency graph.
 #
@@ -41,21 +43,18 @@ def solve(string, lang="en_GB"):
     total = len(words)
 
     # Create list for each word length, and format to print them.
-    lists = {}
-    fmts = []
-    for wlen in range(3, len(GRAPH) + 1):
-        lists[wlen] = []
-        fmts.append("%%%ds" % wlen)
-
-    fmt = " ".join(fmts)
-
+    lists = defaultdict(list)
     for word in sorted(words):
         lists[len(word)].append(word)
+
+    lengths = list(range(3, 10))
+    wordlists = [lists[wlen] for wlen in lengths]
+    fmt = " ".join(f"%{wlen}s" for wlen in lengths)
 
     # Print the words.
     print(f"{total} words found")
     print()
-    for words in it.zip_longest(*lists.values(), fillvalue=""):
+    for words in it.zip_longest(*wordlists, fillvalue=""):
         print(fmt % words)
 
 

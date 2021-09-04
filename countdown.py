@@ -4,8 +4,8 @@
 from __future__ import division
 
 import itertools as it
-from operator import add, sub, mul, truediv as div
-
+from operator import add, mul, sub
+from operator import truediv as div
 
 OPERATORS = {
     add: "+",

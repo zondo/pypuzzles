@@ -1,13 +1,12 @@
-"""
-Solve the Radio Times trackword puzzle.
+"""Solve the Radio Times trackword puzzle.
 """
 
-import enchant
-import networkx as nx
 import itertools as it
-
 from collections import defaultdict
 
+import networkx as nx
+
+from words import get_words
 
 # Trackword adjacency graph.
 #
@@ -30,13 +29,10 @@ def solve(string, lang="en_GB"):
     """
 
     # Set up dictionary.
-    if enchant.dict_exists(lang):
-        d = enchant.Dict(lang)
-    else:
-        raise ValueError(f"lang must be one of {enchant.list_languages()}")
+    d = get_words(3, 9)
 
     def isword(w):
-        return d.check(w)
+        return w in d
 
     # Get the words.
     words = set(trackword(string, wordfunc=isword))
@@ -87,4 +83,4 @@ def all_paths(graph, minlen=0):
 
 
 if __name__ == "__main__":
-    solve("ATENHCIMA")
+    solve("ELESTCLAI")

@@ -36,7 +36,7 @@ def printwords(letters, words, indent=4, width=60):
     for length, wlist in groupby(words, key=len):
         text = " ".join(sorted(wlist))
         tag = "%-*d" % (indent, length)
-        print(fill(text, width=width, 
+        print(fill(text, width=width,
                    initial_indent=tag,
                    subsequent_indent=" " * indent))
 

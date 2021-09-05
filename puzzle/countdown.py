@@ -26,11 +26,11 @@ def countdown(total, *numbers):
     for used in range(len(numbers), 1, -1):
         for perm in it.permutations(numbers, used):
             for oplist in it.product(OPLIST, repeat=used - 1):
-                if total == evalulate(perm, oplist):
+                if total == evaluate(perm, oplist):
                     yield formatted(perm, oplist)
 
 
-def evalulate(numbers, oplist):
+def evaluate(numbers, oplist):
     total, numbers = numbers[0], numbers[1:]
 
     for func, num in zip(oplist, numbers):

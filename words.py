@@ -1,4 +1,6 @@
 """Tools for word lists.
+
+TODO: Allow other word lists
 """
 
 import re

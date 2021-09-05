@@ -29,7 +29,7 @@ def solve(string, lang="en_GB"):
     """
 
     # Set up dictionary.
-    d = get_words(3, 9)
+    d = get_words()
 
     def isword(w):
         return w in d

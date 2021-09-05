@@ -17,7 +17,7 @@ def wordwheel(letters):
 
     letters = letters.lower()
     count = Counter(letters)
-    for word in get_words(3, 9):
+    for word in get_words():
         wcount = Counter(word)
         for letter in alphabet:
             if count[letter] < wcount[letter]:

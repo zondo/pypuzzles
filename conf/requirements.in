@@ -1,0 +1,10 @@
+# Package dependencies.
+
+networkx
+requests-cache
+
+-c constraints.txt
+
+# Local Variables:
+# mode: pip-requirements
+# End:

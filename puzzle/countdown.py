@@ -1,4 +1,12 @@
-"""Solve Countdown puzzles.
+"""
+Usage: {prog} [options] TOTAL NUM [NUM...]
+
+Description:
+    Solve the Radio Times countdown puzzle.
+
+Options:
+    -t, --trace      Print traceback on error
+    -h, --help       This help message
 """
 
 from __future__ import division
@@ -6,6 +14,8 @@ from __future__ import division
 import itertools as it
 from operator import add, mul, sub
 from operator import truediv as div
+
+from . import cli
 
 OPERATORS = {
     add: "+",
@@ -15,6 +25,15 @@ OPERATORS = {
 }
 
 OPLIST = list(OPERATORS.keys())
+
+
+def main():
+    def func(opts):
+        total = int(opts["TOTAL"])
+        numbers = map(int, opts["NUM"])
+        solve(total, *numbers)
+
+    cli.run("countdown", func, __doc__)
 
 
 def solve(total, *numbers):
@@ -48,8 +67,3 @@ def formatted(numbers, oplist):
         fmt += " " + str(num)
 
     return fmt
-
-
-if __name__ == '__main__':
-    #solve(787, 50, 5, 10, 4, 5, 3)
-    solve(204, 100, 25, 1, 9, 9, 1)

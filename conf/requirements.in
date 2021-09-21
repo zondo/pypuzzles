@@ -1,9 +1,10 @@
 # Package dependencies.
 
+-c constraints.txt
+
+docopt
 networkx
 requests-cache
-
--c constraints.txt
 
 # Local Variables:
 # mode: pip-requirements

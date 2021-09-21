@@ -1,4 +1,12 @@
-"""Solve the Radio Times trackword puzzle.
+"""
+Usage: {prog} [options] STRING
+
+Description:
+    Solve the Radio Times trackword puzzle.
+
+Options:
+    -t, --trace      Print traceback on error
+    -h, --help       This help message
 """
 
 import itertools as it
@@ -6,7 +14,8 @@ from collections import defaultdict
 
 import networkx as nx
 
-from words import get_words
+from .words import get_words
+from . import cli
 
 # Trackword adjacency graph.
 #
@@ -22,6 +31,14 @@ GRAPH = {0: [1, 3, 4],
          6: [3, 4, 7],
          7: [3, 4, 5, 6, 8],
          8: [4, 5, 7]}
+
+
+def main():
+    def func(opts):
+        string = opts["STRING"]
+        solve(string)
+
+    cli.run("trackword", func, __doc__)
 
 
 def solve(string, lang="en_GB"):
@@ -80,7 +97,3 @@ def all_paths(graph, minlen=0):
         for target in graph:
             paths = nx.all_simple_paths(graph, source, target)
             yield from filter(lambda p: len(p) >= minlen, paths)
-
-
-if __name__ == "__main__":
-    solve("ELESTCLAI")

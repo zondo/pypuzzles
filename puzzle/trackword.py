@@ -4,9 +4,16 @@ Usage: {prog} [options] STRING
 Description:
     Solve the Radio Times trackword puzzle.
 
+    How many words of three letters or more can you find by tracking from
+    one square to the next, going up, down, sideways or diagonally in
+    order?  You may not use the same letter square twice in any word.
+    Proper nouns or foreign words not allowed.  What is the nine-letter
+    word?
+
 Options:
     -t, --trace      Print traceback on error
     -h, --help       This help message
+
 """
 
 import itertools as it

@@ -4,9 +4,14 @@ Usage: {prog} [options] TOTAL NUM [NUM...]
 Description:
     Solve the Radio Times countdown puzzle.
 
+    Using addition, subtraction, multiplication and division, try to get as
+    close to the target as possible.  You can use each of the six numbers
+    only once, but you don't have to use them all.
+
 Options:
     -t, --trace      Print traceback on error
     -h, --help       This help message
+
 """
 
 from __future__ import division

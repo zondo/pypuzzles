@@ -4,6 +4,11 @@ Usage: {prog} [options] STRING
 Description:
     Solve the Guardian word wheel puzzle.
 
+    Find as many words as possible using letters in the wheel.  Each must
+    use the central letter and at least two others.  Letters may be used
+    only once.  You may not use plurals, foreign words or proper
+    nouns.  There is at least one nine-letter word to be found.
+
 Options:
     -t, --trace      Print traceback on error
     -h, --help       This help message

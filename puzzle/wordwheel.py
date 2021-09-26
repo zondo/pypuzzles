@@ -26,7 +26,7 @@ def main():
     cli.run("wordwheel", func, __doc__)
 
 
-def wordwheel(letters):
+def wordwheel(letters, minlen=3):
     """Yield word wheel words.
 
     Each word must contain the first letter.
@@ -40,7 +40,7 @@ def wordwheel(letters):
             if count[letter] < wcount[letter]:
                 break
         else:
-            if letters[0] in word:
+            if letters[0] in word and len(word) >= minlen:
                 yield word.upper()
 
 

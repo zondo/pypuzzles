@@ -1,38 +1,65 @@
-# Makefile for pypuz.
+# Makefile for pypuzzles.
 
-include conf/Makefile.conf
+include conf/config.mk
 
-SETUP = $(PYTHON) setup.py
+SOURCES = puzzle
+DOCS    = README README.md
 
-PYPI = pypi
-CHECK = twine check $(FILES)
-UPLOAD = twine upload -r $(PYPI) --skip-existing $(FILES)
-FILES = dist/*
+SETUP  = $(PYTHON) setup.py
 
-CLEANFILES = build dist *.egg* *.zip *.el __pycache__ .tox
+CLEANFILES = build dist *.egg* *.el __pycache__ .tox
+MAKEFLAGS  = --no-print-directory
 
-MAKEFLAGS = --no-print-directory
+all: help
 
-.DEFAULT:;	@ $(SETUP) $@ $(OPTS)
+dev: ## Set up for developing
+	pip install -e .
 
-all:		develop
+# Packaging.
 
-develop:;	@ $(SETUP) $@ --user
+wheel sdist: docs ## Build packages
+	$(PYTHON) setup.py $@ $(OPTS)
 
-check:;		$(CHECK)
+docs: $(DOCS) ## Update doc files
 
-upload:		wheel sdist
-		$(UPLOAD)
+# Testing.
 
-upload-test:	wheel sdist
-		@ $(MAKE) upload PYPI=pypitest
+check: test flake mypy ## Run all tests
 
-verify:		test flake
+test: ## Run package tests
+	$(PYTHON) -m pytest -v
 
-test:;		$(PYTHON) -m pytest -v --emacs
+flake: ## Run flake8 on sources
+	flake8 $(SOURCES)
 
-flake:;		flake8 puzzle
+mypy: ## Run mypy on sources
+	mypy $(SOURCES)
 
-clean:;		$(SETUP) $@
-		find . -name '*.py[co]' | xargs rm
-		rm -rf $(CLEANFILES)
+# Uploading to PyPI.
+
+PYPI   = pypi
+FILES  = dist/*
+
+upload-check: ## Check uploads
+	twine check $(FILES)
+
+upload-test: wheel sdist ## Upload to pypitest
+	@ $(MAKE) upload PYPI=pypitest
+
+upload: wheel sdist ## Upload to pypi
+	twine upload -r $(PYPI) --skip-existing $(FILES)
+
+# Other targets.
+
+%.md: %
+	pandoc -f rst -o $<.md $<
+
+clean: ## Clean up
+	find . -name '*.py[co]' | xargs rm
+	rm -rf $(CLEANFILES)
+
+help: ## This help message
+	@ echo Targets:
+	@ echo
+	@ grep -h ":.*##" $(MAKEFILE_LIST) | grep -v 'sed -e' | \
+	  sed -e 's/:.*##/:/' | column -t -s:

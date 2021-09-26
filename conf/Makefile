@@ -1,6 +1,6 @@
 # Makefile for package configuration.
 
-include Makefile.conf
+include config.mk
 
 REQ = requirements
 DEV = dev-requirements

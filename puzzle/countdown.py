@@ -42,8 +42,11 @@ def main():
 
 
 def solve(total, *numbers):
+    seen = set()
     for sol in countdown(total, *numbers):
-        print(sol)
+        if sol not in seen:
+            seen.add(sol)
+            print(sol)
 
 
 def countdown(total, *numbers):

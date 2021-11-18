@@ -72,7 +72,7 @@ def solve(string, lang="en_GB"):
     fmt = " ".join(f"%{wlen}s" for wlen in lengths)
 
     # Print the words.
-    print(f"{total} words found")
+    print(f"{string.upper()}: {total}")
     print()
     for words in it.zip_longest(*wordlists, fillvalue=""):
         print(fmt % words)

@@ -4,6 +4,9 @@
 import re
 import requests_cache
 
+import itertools as it
+from collections import defaultdict
+
 DEFAULT_URL = "http://www.mieliestronk.com/corncob_lowercase.txt"
 
 
@@ -18,3 +21,23 @@ def get_words(url=None, cachefile="~/.words.sqlite"):
     words = set(re.split(r'(\w+)', r.text))
 
     return words
+
+
+def print_words(string, words, separator="  "):
+    words = list(words)
+    total = len(words)
+
+    # Create list for each word length, and format to print them.
+    lists = defaultdict(list)
+    for word in sorted(words):
+        lists[len(word)].append(word)
+
+    lengths = list(range(3, 10))
+    wordlists = [lists[wlen] for wlen in lengths]
+    fmt = separator.join(f"%{wlen}s" for wlen in lengths)
+
+    # Print the words.
+    print(f"{string.upper()}: {total}")
+    print()
+    for words in it.zip_longest(*wordlists, fillvalue=""):
+        print(fmt % words)

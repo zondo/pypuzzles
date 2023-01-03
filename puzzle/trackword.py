@@ -16,12 +16,9 @@ Options:
 
 """
 
-import itertools as it
-from collections import defaultdict
-
 import networkx as nx
 
-from .words import get_words
+from .words import get_words, print_words
 from . import cli
 
 # Trackword adjacency graph.
@@ -60,22 +57,9 @@ def solve(string, lang="en_GB"):
 
     # Get the words.
     words = set(trackword(string, wordfunc=isword))
-    total = len(words)
 
-    # Create list for each word length, and format to print them.
-    lists = defaultdict(list)
-    for word in sorted(words):
-        lists[len(word)].append(word)
-
-    lengths = list(range(3, 10))
-    wordlists = [lists[wlen] for wlen in lengths]
-    fmt = " ".join(f"%{wlen}s" for wlen in lengths)
-
-    # Print the words.
-    print(f"{string.upper()}: {total}")
-    print()
-    for words in it.zip_longest(*wordlists, fillvalue=""):
-        print(fmt % words)
+    # Print them.
+    print_words(string, words)
 
 
 def trackword(string, minlen=3, wordfunc=None):

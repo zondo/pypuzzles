@@ -15,11 +15,9 @@ Options:
 """
 
 from collections import Counter
-from itertools import groupby
 from string import ascii_lowercase as alphabet
-from textwrap import fill
 
-from .words import get_words
+from .words import get_words, print_words
 from . import cli
 
 
@@ -49,22 +47,6 @@ def wordwheel(letters, minlen=3):
                 yield word.upper()
 
 
-def printwords(letters, words, indent=4, width=60):
-    words = list(sorted(words, key=len))
-
-    print(letters.upper() + ":", len(words))
-    print()
-
-    for length, wlist in groupby(words, key=len):
-        text = " ".join(sorted(wlist))
-        tag = "%-*d" % (indent, length)
-        print(fill(text, width=width,
-                   initial_indent=tag,
-                   subsequent_indent=" " * indent))
-
-    print()
-
-
 def solve(letters):
     words = wordwheel(letters)
-    printwords(letters, words)
+    print_words(letters, words)

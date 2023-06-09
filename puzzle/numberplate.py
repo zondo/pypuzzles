@@ -10,8 +10,9 @@ Description:
     are allowed.
 
 Options:
-    -t, --trace      Print traceback on error
-    -h, --help       This help message
+    -m, --maxwords=NUM   Print this many matches [default: 10]
+    -t, --trace          Print traceback on error
+    -h, --help           This help message
 """
 
 import re
@@ -22,20 +23,24 @@ from . import cli
 def main():
     def func(opts):
         string = opts["STRING"]
-        solve(string)
+        maxwords = int(opts["--maxwords"])
+        solve(string, maxwords=maxwords)
 
     cli.run("numberplate", func, __doc__)
 
 
-def numberplate(letters, wild=".*"):
+def numberplate(letters, wild=".*", words=None):
     """Yield words fitting the number plate letters, sorted by length.
     """
 
-    pattern = wild + wild.join(letters.lower()) + wild
-    words = filter(lambda w: re.match(pattern, w), get_words())
+    if not words:
+        words = get_words()
+
+    pattern = wild + wild.join(letters) + wild
+    words = filter(lambda w: re.match(pattern, w), words)
     return sorted(words, key=lambda w: len(w))
 
 
 def solve(letters, maxwords=10):
-    for word in numberplate(letters)[:maxwords]:
+    for word in numberplate(letters.lower())[:maxwords]:
         print(word.upper())

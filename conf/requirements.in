@@ -5,7 +5,3 @@
 docopt
 networkx
 requests-cache
-
-# Local Variables:
-# mode: pip-requirements
-# End:

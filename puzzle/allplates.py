@@ -15,4 +15,7 @@ if __name__ == "__main__":
         letters = "".join(combo)
         wordlist = list(numberplate(letters, words=words))
         if wordlist and len(wordlist[0]) > 5:
-            print(f"{letters.upper()}: {wordlist[0].upper()}")
+            minlen = len(wordlist[0])
+            wordlist = filter(lambda w: len(w) == minlen, wordlist)
+            wordlist = " ".join(w.upper() for w in wordlist)
+            print(f"{letters.upper()}: {wordlist}")

@@ -9,8 +9,9 @@ Description:
     only once, but you don't have to use them all.
 
 Options:
-    -t, --trace      Print traceback on error
-    -h, --help       This help message
+    -m, --maxdiff=NUM   Maximum difference to total [default: 0]
+    -t, --trace         Print traceback on error
+    -h, --help          This help message
 
 """
 
@@ -36,25 +37,27 @@ def main():
     def func(opts):
         total = int(opts["TOTAL"])
         numbers = map(int, opts["NUM"])
-        solve(total, *numbers)
+        maxdiff = int(opts["--maxdiff"])
+        solve(total, maxdiff, *numbers)
 
     cli.run("countdown", func, __doc__)
 
 
-def solve(total, *numbers):
+def solve(total, maxdiff, *numbers):
     seen = set()
-    for sol in countdown(total, *numbers):
+    for sol in countdown(total, maxdiff, *numbers):
         if sol not in seen:
             seen.add(sol)
             print(sol)
 
 
-def countdown(total, *numbers):
+def countdown(total, maxdiff, *numbers):
     for used in range(len(numbers), 1, -1):
         for perm in it.permutations(numbers, used):
             for oplist in it.product(OPLIST, repeat=used - 1):
-                if total == evaluate(perm, oplist):
-                    yield formatted(perm, oplist)
+                value = evaluate(perm, oplist)
+                if abs(total - value) <= maxdiff:
+                    yield formatted(perm, value, oplist)
 
 
 def evaluate(numbers, oplist):
@@ -66,7 +69,7 @@ def evaluate(numbers, oplist):
     return total
 
 
-def formatted(numbers, oplist):
+def formatted(numbers, value, oplist):
     start, numbers = numbers[0], numbers[1:]
     fmt = str(start)
 
@@ -74,4 +77,5 @@ def formatted(numbers, oplist):
         fmt += " " + OPERATORS[func]
         fmt += " " + str(num)
 
+    fmt += " = " + str(value)
     return fmt

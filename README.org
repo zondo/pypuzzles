@@ -1,0 +1,12 @@
+* pypuzzles -- solvers for several puzzles
+
+#+options: author:nil num:nil toc:nil
+#+startup: showall
+
+This is a collection of programs to solve some of my favourite word/number
+puzzles from the Radio Times and the Guardian: [[https://nrich.maths.org/6499][countdown]], [[https://www.radiotimespuzzles.com/all-puzzles/track-word][trackword]] and
+[[https://wordwheels.co.uk/Instructions][wordwheel]].
+
+- TODO: Write README
+- TODO: Add more info to help messages
+- TODO: Add tests

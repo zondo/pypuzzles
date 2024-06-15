@@ -40,4 +40,4 @@ def print_words(string, words, separator="  "):
     print(f"{string.upper()}: {total}")
     print()
     for words in it.zip_longest(*wordlists, fillvalue=""):
-        print(fmt % words)
+        print((fmt % words).rstrip())

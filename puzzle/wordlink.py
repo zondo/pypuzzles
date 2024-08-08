@@ -42,10 +42,9 @@ def make_wordlinks(wordset, wordlen):
     idx2 = wordlen - idx1
 
     for word in words:
-        first, second = word[:idx1], word[idx1:]
-        g.add_edge(first, second)
-        first, second = word[:idx2], word[idx2:]
-        g.add_edge(first, second)
+        for idx in idx1, idx2:
+            first, second = word[:idx], word[idx:]
+            g.add_edge(first, second)
 
     return g
 

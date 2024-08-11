@@ -7,7 +7,7 @@ import requests_cache
 import itertools as it
 from collections import defaultdict
 
-DEFAULT_URL = "https://raw.githubusercontent.com/jbendsen/spelling-bee/main/corncob_lowercase.txt"
+DEFAULT_URL = "https://raw.githubusercontent.com/N1xis10t/Corncob/main/corncob_lowercase.txt"
 
 
 def get_words(url=None, cachefile="~/.words.sqlite"):

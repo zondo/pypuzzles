@@ -10,8 +10,9 @@ Description:
     nouns.  There is at least one nine-letter word to be found.
 
 Options:
-    -t, --trace      Print traceback on error
-    -h, --help       This help message
+    -m, --minlen=NUM   Set minimum word length [default: 3]
+    -t, --trace        Print traceback on error
+    -h, --help         This help message
 """
 
 from collections import Counter
@@ -24,7 +25,8 @@ from . import cli
 def main():
     def func(opts):
         string = opts["STRING"]
-        solve(string)
+        minlen = int(opts["--minlen"])
+        solve(string, minlen)
 
     cli.run("wordwheel", func, __doc__)
 
@@ -47,6 +49,6 @@ def wordwheel(letters, minlen=3):
                 yield word.upper()
 
 
-def solve(letters):
-    words = wordwheel(letters)
+def solve(letters, minlen):
+    words = wordwheel(letters, minlen)
     print_words(letters, words)

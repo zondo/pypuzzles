@@ -26,13 +26,14 @@ def get_words(url=None, cachefile="~/.words.sqlite"):
 def print_words(string, words, separator="  "):
     words = list(words)
     total = len(words)
+    minlen = min(len(word) for word in words)
 
     # Create list for each word length, and format to print them.
     lists = defaultdict(list)
     for word in sorted(words):
         lists[len(word)].append(word)
 
-    lengths = list(range(3, 10))
+    lengths = list(range(minlen, 10))
     wordlists = [lists[wlen] for wlen in lengths]
     fmt = separator.join(f"%{wlen}s" for wlen in lengths)
 

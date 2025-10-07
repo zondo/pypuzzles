@@ -3,7 +3,7 @@
 include conf/config.mk
 
 SOURCES = puzzle
-DOCS    = README README.md
+DOCS    = README.org README.md
 
 SETUP  = $(PYTHON) setup.py
 
